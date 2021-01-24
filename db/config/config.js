@@ -16,13 +16,15 @@ module.exports = {
     password: DB_PASSWORD,
     database: DB_DATABASE,
     host: DB_HOST,
-    dialect: DB_DIALECT
+    dialect: DB_DIALECT,
+    logging: true
   },
   production: {
     username: DB_USER,
     password: DB_PASSWORD,
     database: DB_DATABASE,
     host: DB_HOST,
-    dialect: DB_DIALECT
+    dialect: DB_DIALECT,
+    logging: false
   }
 };
