@@ -1,4 +1,4 @@
-const { User } = require("./models");
+const { User, Task } = require("./models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -9,6 +9,30 @@ const findAll = async () => {
   console.log("All users:", JSON.stringify(users, null, 4));
 };
 
+const findAllWithTasks = async () => {
+  const users = await User.findAll({
+    include: [
+      {
+        model: Task
+      }
+    ]
+  });
+  console.log("All users with their associated tasks:", JSON.stringify(users, null, 4));
+};
+
+// Find a task with its associated user
+// Raw SQL: SELECT * FROM "Tasks" JOIN "Users" ON "Users"."id" = "Tasks"."userId";
+
+const findTasksWithUser = async () => {
+  const tasks = await Task.findAll({
+    include: [
+      {
+        model: User
+      }
+    ]
+  });
+  console.log("All tasks with their associated user:", JSON.stringify(tasks, null, 4));
+};
 // Create a new user
 // Raw SQL: INSERT INTO "Users" (id, firstName, lastName, email, userName, password, jobTitle) VALUES (DEFAULT, 'Jane', 'Doe', 'jane@jane.com', 'janedoe', '123456789', 'Systems Analyst')
 const createUser = async () => {
@@ -73,7 +97,9 @@ const findAllJohnsOrJanes = async () => {
 };
 
 const run = async () => {
-  await findAll();
+  await findTasksWithUser();
+  // await findAllWithTasks();
+  // await findAll();
   // await createUser()
   // await destroyUser()
   // await updateUser()
